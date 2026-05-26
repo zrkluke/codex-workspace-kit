@@ -1,0 +1,19 @@
+# Binary/source artifacts should be versioned intentionally, not by accident.
+*.xlsx
+*.xlsm
+*.xls
+*.docx
+*.pptx
+*.pdf
+~$*
+
+# Runtime and local scratch files.
+__pycache__/
+.pytest_cache/
+.venv/
+node_modules/
+.DS_Store
+Thumbs.db
+
+# Keep folder placeholders.
+!.gitkeep
