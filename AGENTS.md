@@ -39,7 +39,7 @@ powershell -ExecutionPolicy Bypass -File .skills/genbi-prep/scripts/session_star
 - `00-examples/01-source/knowledge/知識典__example.xlsx`: 知識典格式範例。
 - `00-examples/01-source/golden/golden__dataset__example.xlsx`: golden Q&A 格式範例。
 - `00-examples/02-workbench/schema/20260525-1430_schema_enriched_v01_example_draft.xlsx`: 中間草稿輸出範例，用來示範 Codex 產生後、尚待 review 的 schema after 草稿。
-- `00-examples/02-workbench/reports/CHANGELOG.md`: workbench changelog 格式範例。
+- `00-examples/02-workbench/schema/CHANGELOG.md`: schema workbench changelog 格式範例。
 - `00-examples/03-final-exports/schema/Schema__after__example.xlsx`: after schema 最終匯出格式範例。
 - `01-source/schema/`: 使用者正式提供的原始資料表 schema。核心 sheet 是 `資料表總表` 與 `表欄位`。
 - `01-source/knowledge/`: 使用者正式提供的原始共通知識典。
@@ -49,7 +49,7 @@ powershell -ExecutionPolicy Bypass -File .skills/genbi-prep/scripts/session_star
 - `02-workbench/knowledge/`: 知識典整理工作檔。
 - `02-workbench/interview/`: Codex 整理後的訪談紀錄。
 - `02-workbench/golden/`: golden dataset 草稿與修訂版。
-- `02-workbench/reports/`: 檢查報告、待補清單、訪談問題清單。
+- `02-workbench/reports/`: 跨 artifact 的檢查報告、待補清單、訪談問題清單。
 - `03-final-exports/schema/Schema__after.xlsx`: 最終 GenBI schema after workbook。
 - `03-final-exports/golden/`: 最終 golden dataset。
 - `03-final-exports/reports/`: 最終檢查報告或交付摘要。
@@ -67,7 +67,7 @@ Excel 檔案不進 Git；本專案用檔名與 changelog 管理 workbench 版本
 - Workbench 檔名格式：
   - `YYYYMMDD-HHMM_<artifact>_<stage>_vNN[_note].xlsx`
   - 範例：`20260525-1430_schema_enriched_v01_code_mapping_added.xlsx`
-- `02-workbench/reports/CHANGELOG.md` 記錄每個版本的來源、變更摘要、仍待確認事項。
+- 每個 artifact 的 `CHANGELOG.md` 放在自己的工作資料夾內，例如 `02-workbench/schema/CHANGELOG.md`、`02-workbench/golden/CHANGELOG.md`、`02-workbench/interview/CHANGELOG.md`、`02-workbench/knowledge/CHANGELOG.md`。
 - `CHANGELOG.md` 與 `reports/` 內的工作紀錄預設使用繁體中文，方便使用者閱讀追蹤。
 - `03-final-exports/` 只放最後交付版，檔名可以穩定，例如 `Schema__after.xlsx`。
 
@@ -94,7 +94,7 @@ python -X utf8 .skills/genbi-prep/scripts/version_workbench_artifact.py schema -
 3. 詢問使用者是否要基於該檔案繼續，或改用 `01-source/` 的原始檔。
 4. 使用者確認後，必須先建立新的 `02-workbench/` 版本檔。
 5. 只能修改新建立的版本檔；不要直接修改 active file。
-6. 每次建立新版本都要更新 `02-workbench/reports/CHANGELOG.md`。
+6. 每次建立新版本都要更新該 artifact 資料夾內的 `CHANGELOG.md`，例如 schema 版本更新 `02-workbench/schema/CHANGELOG.md`。
 
 範例：
 

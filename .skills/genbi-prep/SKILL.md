@@ -39,7 +39,7 @@ python -X utf8 .skills/genbi-prep/scripts/list_active_candidates.py schema
 
 Tell the user which file appears latest and ask whether to continue from it. If a newer `02-workbench/` version exists, prefer it unless the user explicitly wants to restart from `01-source/`.
 
-After the user confirms the active file, create a new `02-workbench/` version from that active file before making any edits. Edit only the newly created version and append `02-workbench/reports/CHANGELOG.md`; never modify the confirmed active workbook in place.
+After the user confirms the active file, create a new `02-workbench/` version from that active file before making any edits. Edit only the newly created version and append the artifact-local changelog, such as `02-workbench/schema/CHANGELOG.md`; never modify the confirmed active workbook in place.
 
 When creating or updating workbench Excel files, do not overwrite an existing workbook. Use filename-based versions and update the changelog:
 
@@ -64,7 +64,7 @@ Read `references/prep-checklist.md` when you need the detailed interview checkli
 9. Capture user-provided interview source files in `01-source/interview/` and Codex-organized interview notes in `02-workbench/interview/`.
 10. Treat missing golden data at project start as normal. Create golden Q&A only after interview and schema context are sufficient, usually as a draft under `02-workbench/golden/`; use `01-source/golden/` only when the user already has an existing dataset.
 11. Generate or update Schema After only after the schema descriptions and notes are strong enough to support SQL generation.
-12. For every workbench workbook revision, create a new timestamped filename and append `02-workbench/reports/CHANGELOG.md`.
+12. For every workbench workbook revision, create a new timestamped filename and append that artifact folder's `CHANGELOG.md`.
 
 ## What To Ask
 

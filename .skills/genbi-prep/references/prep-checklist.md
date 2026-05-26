@@ -26,7 +26,7 @@ Use `00-examples/` only as read-only format reference. It contains only folders 
 
 ## Workbench Versioning
 
-Excel workbooks are not tracked in Git. Track workbench workbook history with filenames plus `02-workbench/reports/CHANGELOG.md`.
+Excel workbooks are not tracked in Git. Track each artifact's workbook history with filenames plus an artifact-local changelog such as `02-workbench/schema/CHANGELOG.md`.
 
 Filename format:
 
@@ -47,7 +47,7 @@ Rules:
 - Do not overwrite `01-source/` files.
 - Do not repeatedly overwrite the same `02-workbench/` Excel workbook.
 - Create a new version for each meaningful user review, enrichment pass, or generated draft.
-- Record source file, summary, and unresolved questions in `02-workbench/reports/CHANGELOG.md`.
+- Record source file, summary, and unresolved questions in the same artifact folder's `CHANGELOG.md`.
 - Keep `03-final-exports/` for stable final deliverables.
 
 Use:
@@ -76,7 +76,7 @@ Rules:
 - If the user confirms a workbench file, create the next version from that file before editing.
 - If the user confirms a source file, create the first or next workbench version from source before editing.
 - Edit only the newly created version file.
-- Record the new version in `02-workbench/reports/CHANGELOG.md`.
+- Record the new version in the same artifact folder's `CHANGELOG.md`, for example `02-workbench/schema/CHANGELOG.md`.
 - Write changelog and reports in Traditional Chinese by default.
 
 ## Schema Enrichment

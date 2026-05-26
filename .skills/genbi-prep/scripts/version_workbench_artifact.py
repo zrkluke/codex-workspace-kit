@@ -17,7 +17,6 @@ for stream_name in ("stdout", "stderr"):
 
 
 WORKBENCH_ROOT = Path("02-workbench")
-CHANGELOG_REL = WORKBENCH_ROOT / "reports" / "CHANGELOG.md"
 DEFAULT_EXTENSIONS = {
     "schema": ".xlsx",
     "knowledge": ".xlsx",
@@ -65,6 +64,10 @@ def build_name(
     if note_slug and note_slug != "update":
         parts.append(note_slug)
     return "_".join(parts) + extension
+
+
+def artifact_changelog_path(artifact: str) -> Path:
+    return WORKBENCH_ROOT / artifact / "CHANGELOG.md"
 
 
 def append_changelog(path: Path, artifact_path: Path, summary: str, source: Path | None) -> None:
@@ -125,12 +128,14 @@ def main() -> int:
             print(f"找不到來源檔：{args.source}")
             return 1
         shutil.copy2(args.source, output_path)
+        output_path.touch()
     else:
         output_path.touch(exist_ok=False)
 
-    append_changelog(CHANGELOG_REL, output_path, args.summary, args.source)
+    changelog_path = artifact_changelog_path(artifact)
+    append_changelog(changelog_path, output_path, args.summary, args.source)
     print(f"已建立 workbench 版本：{output_path}")
-    print(f"已更新 changelog：{CHANGELOG_REL}")
+    print(f"已更新 changelog：{changelog_path}")
     print(f"請只修改新版本檔案，不要覆蓋來源或前一版：{output_path}")
     return 0
 

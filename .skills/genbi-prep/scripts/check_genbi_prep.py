@@ -26,7 +26,7 @@ SCHEMA_DIR_REL = Path("01-source") / "schema"
 KNOWLEDGE_DIR_REL = Path("01-source") / "knowledge"
 INTERVIEW_REL = Path("01-source") / "interview"
 GOLDEN_DIR_REL = Path("01-source") / "golden"
-WORKBENCH_CHANGELOG_REL = Path("02-workbench") / "reports" / "CHANGELOG.md"
+WORKBENCH_ROOT_REL = Path("02-workbench")
 EXAMPLE_SCHEMA_REL = Path("00-examples") / "01-source" / "schema" / "Schema__before__example.xlsx"
 EXAMPLE_KNOWLEDGE_REL = Path("00-examples") / "01-source" / "knowledge" / "知識典__example.xlsx"
 EXAMPLE_GOLDEN_REL = Path("00-examples") / "01-source" / "golden" / "golden__dataset__example.xlsx"
@@ -299,7 +299,7 @@ def inspect_examples(root: Path) -> list[Finding]:
     expected = [
         EXAMPLE_SCHEMA_REL,
         Path("00-examples") / "02-workbench" / "schema" / "20260525-1430_schema_enriched_v01_example_draft.xlsx",
-        Path("00-examples") / "02-workbench" / "reports" / "CHANGELOG.md",
+        Path("00-examples") / "02-workbench" / "schema" / "CHANGELOG.md",
         Path("00-examples") / "03-final-exports" / "schema" / "Schema__after__example.xlsx",
         EXAMPLE_KNOWLEDGE_REL,
         EXAMPLE_GOLDEN_REL,
@@ -381,16 +381,38 @@ def inspect_interview(path: Path) -> list[Finding]:
     return [Finding("INFO", "使用者需求訪談", f"訪談資料夾已有 {len(files)} 個檔案。")]
 
 
-def inspect_workbench_changelog(path: Path) -> list[Finding]:
-    if not path.exists():
-        return [
-            Finding(
-                "TODO",
-                "Workbench 版本控制",
-                f"找不到 {path}；若開始產生 workbench Excel，請用版本檔名並更新 changelog。",
+def inspect_workbench_changelogs(root: Path) -> list[Finding]:
+    findings: list[Finding] = []
+    for artifact in ["schema", "knowledge", "golden", "interview", "reports"]:
+        directory = root / WORKBENCH_ROOT_REL / artifact
+        changelog = directory / "CHANGELOG.md"
+        has_files = False
+        if directory.exists():
+            has_files = any(
+                path.is_file()
+                and path.name not in {".gitkeep", "CHANGELOG.md"}
+                and not path.name.startswith("~$")
+                for path in directory.iterdir()
             )
-        ]
-    return [Finding("INFO", "Workbench 版本控制", f"已建立 changelog：{path}")]
+        if changelog.exists():
+            findings.append(Finding("INFO", "Workbench 版本控制", f"{artifact} 已建立 changelog：{changelog}"))
+        elif has_files:
+            findings.append(
+                Finding(
+                    "TODO",
+                    "Workbench 版本控制",
+                    f"{artifact} 已有工作檔但找不到 {changelog}；請在該 artifact 資料夾內建立 changelog。",
+                )
+            )
+    if not findings:
+        findings.append(
+            Finding(
+                "INFO",
+                "Workbench 版本控制",
+                "尚未建立 artifact changelog；開始產生 workbench 檔後，請在同資料夾建立 CHANGELOG.md。",
+            )
+        )
+    return findings
 
 
 def inspect_golden(path: Path | None, source_dir: Path | None = None) -> list[Finding]:
@@ -504,7 +526,7 @@ def main() -> int:
     findings.extend(inspect_schema(schema, None if args.schema else schema_dir))
     findings.extend(inspect_knowledge(knowledge, None if args.knowledge else knowledge_dir))
     findings.extend(inspect_interview(interview))
-    findings.extend(inspect_workbench_changelog(root / WORKBENCH_CHANGELOG_REL))
+    findings.extend(inspect_workbench_changelogs(root))
     findings.extend(inspect_golden(golden, None if args.golden else golden_dir))
     print_findings(findings)
     return 1 if any(f.severity == "ERROR" for f in findings) else 0

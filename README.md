@@ -24,7 +24,7 @@
 00-examples/01-source/knowledge/知識典__example.xlsx
 00-examples/01-source/golden/golden__dataset__example.xlsx
 00-examples/02-workbench/schema/20260525-1430_schema_enriched_v01_example_draft.xlsx
-00-examples/02-workbench/reports/CHANGELOG.md
+00-examples/02-workbench/schema/CHANGELOG.md
 00-examples/03-final-exports/schema/Schema__after__example.xlsx
 ```
 
@@ -63,7 +63,7 @@ Codex 會回報：
 - 知識典是否已有內容
 - 若 golden dataset 已存在，是否缺 `question` 或 `correct_postgres_sql`
 - 若 golden dataset 尚未存在，會標成後續建立事項，不視為初期 blocker
-- workbench changelog 是否已建立
+- artifact 所屬資料夾內的 changelog 是否已建立
 
 ## 4. 確認要從哪份檔案繼續
 
@@ -108,10 +108,10 @@ YYYYMMDD-HHMM_<artifact>_<stage>_vNN[_note].xlsx
 每次建立新版本都會更新：
 
 ```text
-02-workbench/reports/CHANGELOG.md
+02-workbench/<artifact>/CHANGELOG.md
 ```
 
-`CHANGELOG.md` 和 `reports/` 內的工作紀錄預設使用繁體中文，方便團隊閱讀與追蹤。
+每個 artifact 的 `CHANGELOG.md` 放在自己的工作資料夾內，例如 `02-workbench/schema/CHANGELOG.md`、`02-workbench/golden/CHANGELOG.md`。這樣版本檔與變更紀錄可以放在一起對齊。`reports/` 只放跨 artifact 的檢查報告、待補清單或交付摘要。
 
 ## 6. 和 Codex 一起補資料
 
@@ -153,7 +153,7 @@ Excel 檔案不進 Git。這個 repo 用 `.gitignore` 排除：
 Excel 的版本歷史靠：
 
 - `02-workbench/` 的版本化檔名
-- `02-workbench/reports/CHANGELOG.md`
+- `02-workbench/<artifact>/CHANGELOG.md`
 
 文字檔如 README、AGENTS、scripts、changelog 可以進 Git，保留可 diff 的流程與紀錄。
 
