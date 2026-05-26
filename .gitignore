@@ -1,0 +1,9 @@
+# Excel workbooks are versioned by filename in 02-workbench/ and documented in changelogs.
+*.xlsx
+*.xlsm
+*.xls
+~$*
+
+# Keep folder placeholders.
+!.gitkeep
+

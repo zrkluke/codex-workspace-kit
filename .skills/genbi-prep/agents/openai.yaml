@@ -1,0 +1,7 @@
+interface:
+  display_name: "GenBI Prep"
+  short_description: "Prepare GenBI schema and golden SQL assets"
+  default_prompt: "Use $genbi-prep to inspect this workspace and list the GenBI prep files that still need user input."
+
+policy:
+  allow_implicit_invocation: true
