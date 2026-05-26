@@ -49,6 +49,8 @@ python -X utf8 .skills/genbi-prep/scripts/version_workbench_artifact.py schema -
 
 Read `references/prep-checklist.md` when you need the detailed interview checklist or workbook acceptance criteria.
 
+Artifact-local changelogs under `02-workbench/**/CHANGELOG.md` are local user work records and are ignored by Git. Example changelogs under `00-examples/**/CHANGELOG.md` remain tracked as format references.
+
 ## Workflow
 
 1. Inspect the workspace and run the checker.

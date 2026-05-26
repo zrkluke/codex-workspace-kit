@@ -26,7 +26,9 @@ Use `00-examples/` only as read-only format reference. It contains only folders 
 
 ## Workbench Versioning
 
-Excel workbooks are not tracked in Git. Track each artifact's workbook history with filenames plus an artifact-local changelog such as `02-workbench/schema/CHANGELOG.md`.
+Excel workbooks are not tracked in Git. Track each artifact's local workbook history with filenames plus an artifact-local changelog such as `02-workbench/schema/CHANGELOG.md`.
+
+`02-workbench/**/CHANGELOG.md` is a local user/project record and should not be committed. Keep example changelogs under `00-examples/**/CHANGELOG.md` tracked as format references.
 
 Filename format:
 

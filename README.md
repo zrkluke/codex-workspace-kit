@@ -111,7 +111,9 @@ YYYYMMDD-HHMM_<artifact>_<stage>_vNN[_note].xlsx
 02-workbench/<artifact>/CHANGELOG.md
 ```
 
-每個 artifact 的 `CHANGELOG.md` 放在自己的工作資料夾內，例如 `02-workbench/schema/CHANGELOG.md`、`02-workbench/golden/CHANGELOG.md`。這樣版本檔與變更紀錄可以放在一起對齊。`reports/` 只放跨 artifact 的檢查報告、待補清單或交付摘要。
+每個 artifact 的 `CHANGELOG.md` 放在自己的工作資料夾內，例如 `02-workbench/schema/CHANGELOG.md`、`02-workbench/golden/CHANGELOG.md`。這樣版本檔與變更紀錄可以放在一起對齊。
+
+`02-workbench/**/CHANGELOG.md` 是使用者本機工作紀錄，預設不進 Git；`00-examples/**/CHANGELOG.md` 會保留在 Git 裡作為格式範例。`reports/` 只放跨 artifact 的檢查報告、待補清單或交付摘要，這類工作紀錄也預設不進 Git。
 
 ## 6. 和 Codex 一起補資料
 
@@ -150,12 +152,12 @@ Excel 檔案不進 Git。這個 repo 用 `.gitignore` 排除：
 ~$*
 ```
 
-Excel 的版本歷史靠：
+Excel 的本機版本歷史靠：
 
 - `02-workbench/` 的版本化檔名
 - `02-workbench/<artifact>/CHANGELOG.md`
 
-文字檔如 README、AGENTS、scripts、changelog 可以進 Git，保留可 diff 的流程與紀錄。
+文字檔如 README、AGENTS、scripts、範例 changelog 可以進 Git；實際 `02-workbench/` 裡的使用者工作紀錄不進 Git，避免模板 repo 帶入個人使用歷程。
 
 ## 9. Windows 編碼設定
 

@@ -4,6 +4,13 @@
 *.xls
 ~$*
 
+# Local workbench logs and reports are user/project-specific.
+02-workbench/**/CHANGELOG.md
+02-workbench/reports/*.md
+
 # Keep folder placeholders.
 !.gitkeep
+
+# Keep example changelogs tracked as format references.
+!00-examples/**/CHANGELOG.md
 

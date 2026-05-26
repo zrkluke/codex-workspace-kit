@@ -68,6 +68,7 @@ Excel 檔案不進 Git；本專案用檔名與 changelog 管理 workbench 版本
   - `YYYYMMDD-HHMM_<artifact>_<stage>_vNN[_note].xlsx`
   - 範例：`20260525-1430_schema_enriched_v01_code_mapping_added.xlsx`
 - 每個 artifact 的 `CHANGELOG.md` 放在自己的工作資料夾內，例如 `02-workbench/schema/CHANGELOG.md`、`02-workbench/golden/CHANGELOG.md`、`02-workbench/interview/CHANGELOG.md`、`02-workbench/knowledge/CHANGELOG.md`。
+- `02-workbench/**/CHANGELOG.md` 與 `02-workbench/reports/*.md` 是使用者本機工作紀錄，預設不進 Git；`00-examples/**/CHANGELOG.md` 才作為格式範例進 Git。
 - `CHANGELOG.md` 與 `reports/` 內的工作紀錄預設使用繁體中文，方便使用者閱讀追蹤。
 - `03-final-exports/` 只放最後交付版，檔名可以穩定，例如 `Schema__after.xlsx`。
 
