@@ -3,6 +3,11 @@
 *.xlsm
 *.xls
 ~$*
+node_modules/
+
+# Keep synthetic example workbooks tracked.
+!00-examples/**/*.xlsx
+00-examples/**/~$*.xlsx
 
 # Local workbench logs and reports are user/project-specific.
 02-workbench/**/CHANGELOG.md

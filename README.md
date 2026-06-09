@@ -24,7 +24,7 @@
 01-source/golden/      既有 golden dataset；沒有也正常
 ```
 
-`00-examples/` 只用來參考格式，不要當成正式工作檔。
+`00-examples/` 只用來參考格式，不要當成正式工作檔。裡面的資料都是 synthetic example，不能放真實客戶資料、真實 schema 或機密 business logic。
 
 ## 怎麼開始
 

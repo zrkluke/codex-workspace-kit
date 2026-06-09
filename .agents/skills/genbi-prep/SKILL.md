@@ -51,6 +51,8 @@ Read `references/prep-checklist.md` when you need the detailed interview checkli
 
 Artifact-local changelogs under `02-workbench/**/CHANGELOG.md` are local user work records and are ignored by Git. Example changelogs under `00-examples/**/CHANGELOG.md` remain tracked as format references.
 
+When a workbench workbook has added, changed, or deleted content, mark the affected cells or rows in red font in the new workbench version and append the same change to the artifact-local `CHANGELOG.md`. For deletions, do not silently remove content; first mark the row or cell in red with a deletion note so the user can review it before final export.
+
 ## Workflow
 
 1. Inspect the workspace and run the checker.
@@ -66,7 +68,7 @@ Artifact-local changelogs under `02-workbench/**/CHANGELOG.md` are local user wo
 9. Capture user-provided interview source files in `01-source/interview/` and Codex-organized interview notes in `02-workbench/interview/`.
 10. Treat missing golden data at project start as normal. Create golden Q&A only after interview and schema context are sufficient, usually as a draft under `02-workbench/golden/`; use `01-source/golden/` only when the user already has an existing dataset.
 11. Generate or update Schema After only after the schema descriptions and notes are strong enough to support SQL generation.
-12. For every workbench workbook revision, create a new timestamped filename and append that artifact folder's `CHANGELOG.md`.
+12. For every workbench workbook revision, create a new timestamped filename, mark changed cells or deletion notes in red font, and append that artifact folder's `CHANGELOG.md`.
 
 ## What To Ask
 

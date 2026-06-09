@@ -35,7 +35,7 @@ powershell -ExecutionPolicy Bypass -File .agents/skills/genbi-prep/scripts/sessi
 
 這個專案採用 `00-examples/`、`01-source/`、`02-workbench/`、`03-final-exports/` 分層，不做 in-place 修改。
 
-- `00-examples/`: 只放範例檔，用來讓 Codex 理解欄位與格式。不要修改這裡的 Excel。
+- `00-examples/`: 只放可進 Git 的 synthetic 範例檔，用來讓 Codex 理解欄位與格式。不要放真實客戶資料、真實 schema 或機密 business logic；不要把這裡的 Excel 當正式工作檔。
 - `01-source/`: 使用者正式提供的原始來源檔。Codex 可以讀取並檢查，但除非使用者明確要求，不要覆蓋原始檔。
 - `02-workbench/`: Codex 與使用者協作整理、enrich、訪談紀錄、檢查報告與中間草稿的工作區。
 - `03-final-exports/`: 最後交付或匯出的版本，例如 Schema after、enriched golden dataset、最終報告。
@@ -67,7 +67,7 @@ powershell -ExecutionPolicy Bypass -File .agents/skills/genbi-prep/scripts/sessi
 
 ## Workbench Versioning
 
-Excel 檔案不進 Git；本專案用檔名與 changelog 管理 workbench 版本。
+真實 source 與 workbench Excel 不進 Git；只有 `00-examples/**/*.xlsx` 這類 synthetic 範例 Excel 可進 Git 作為格式參考。本專案用檔名與 changelog 管理 workbench 版本。
 
 - 不要 in-place 覆蓋 `01-source/` 的原始檔。
 - 修改 `02-workbench/` 的 Excel 前，先另存新檔，不要反覆覆蓋同一份 workbook。
@@ -77,6 +77,8 @@ Excel 檔案不進 Git；本專案用檔名與 changelog 管理 workbench 版本
 - 每個 artifact 的 `CHANGELOG.md` 放在自己的工作資料夾內，例如 `02-workbench/schema/CHANGELOG.md`、`02-workbench/golden/CHANGELOG.md`、`02-workbench/interview/CHANGELOG.md`、`02-workbench/knowledge/CHANGELOG.md`。
 - `02-workbench/**/CHANGELOG.md` 與 `02-workbench/reports/*.md` 是使用者本機工作紀錄，預設不進 Git；`00-examples/**/CHANGELOG.md` 才作為格式範例進 Git。
 - `CHANGELOG.md` 與 `reports/` 內的工作紀錄預設使用繁體中文，方便使用者閱讀追蹤。
+- 每次 workbench 有新增、修改或刪除內容時，必須在新版本 workbook 中用紅字標示變更處，並同步寫入該 artifact 的 `CHANGELOG.md`。
+- 刪除內容不要直接無痕移除；若需要刪除列或欄位，先在 workbench 新版本以紅字註記刪除原因或刪除狀態，讓使用者 review 後再決定是否從最終版移除。
 - `03-final-exports/` 只放最後交付版，檔名可以穩定，例如 `Schema__after.xlsx`。
 
 產生下一版 workbench 檔名或複製來源檔時，使用：

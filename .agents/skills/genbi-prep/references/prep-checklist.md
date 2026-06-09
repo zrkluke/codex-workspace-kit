@@ -26,7 +26,7 @@ Use `00-examples/` only as read-only format reference. It contains only folders 
 
 ## Workbench Versioning
 
-Excel workbooks are not tracked in Git. Track each artifact's local workbook history with filenames plus an artifact-local changelog such as `02-workbench/schema/CHANGELOG.md`.
+Real source and workbench Excel files are not tracked in Git. Only synthetic example workbooks under `00-examples/**/*.xlsx` are tracked as format references. Track each real artifact's local workbook history with filenames plus an artifact-local changelog such as `02-workbench/schema/CHANGELOG.md`.
 
 `02-workbench/**/CHANGELOG.md` is a local user/project record and should not be committed. Keep example changelogs under `00-examples/**/CHANGELOG.md` tracked as format references.
 
@@ -49,7 +49,9 @@ Rules:
 - Do not overwrite `01-source/` files.
 - Do not repeatedly overwrite the same `02-workbench/` Excel workbook.
 - Create a new version for each meaningful user review, enrichment pass, or generated draft.
-- Record source file, summary, and unresolved questions in the same artifact folder's `CHANGELOG.md`.
+- Mark every added, modified, or deletion-review cell/row in red font in the new workbench workbook version.
+- For deletions, keep a red deletion note or status in the workbench version first; do not silently remove source content before user review.
+- Record source file, summary, changed rows/cells, deletion-review items, and unresolved questions in the same artifact folder's `CHANGELOG.md`.
 - Keep `03-final-exports/` for stable final deliverables.
 
 Use:
@@ -79,6 +81,7 @@ Rules:
 - If the user confirms a source file, create the first or next workbench version from source before editing.
 - Edit only the newly created version file.
 - Record the new version in the same artifact folder's `CHANGELOG.md`, for example `02-workbench/schema/CHANGELOG.md`.
+- In the workbook, use red font to mark cells or rows touched in this revision so the user can review added, changed, and deletion-review content quickly.
 - Write changelog and reports in Traditional Chinese by default.
 
 ## Schema Enrichment
