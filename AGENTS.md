@@ -2,27 +2,34 @@
 
 這個 workspace 用來協助完成 GenBI agent 上線前的前置作業：補齊資料表 schema、整理知識典、訪談使用者需求，並建立 golden dataset 的自然語言問題與 PostgreSQL SQL。
 
+## 文件分工
+
+- `README.md` 是給使用者看的 quickstart 與專案地圖，保持簡短，不放完整操作規則。
+- `AGENTS.md` 是給 Codex 的專案規則，記錄必須遵守的工作流程、限制與檢查方式。
+- `.agents/skills/genbi-prep/SKILL.md` 是 Codex 可自動載入的 repo-scoped skill，保存可重用 workflow、scripts 與 checklist 索引。
+- 若操作規則需要長期生效，優先更新 `AGENTS.md` 或 skill；不要把 Codex-only 規則重複寫進 README。
+
 ## Session Start
 
 每次開始工作時，先檢查目前文件狀態，並把「需要使用者補充」的項目條列給使用者：
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .skills/genbi-prep/scripts/session_start_check.ps1 -Root .
+powershell -ExecutionPolicy Bypass -File .agents/skills/genbi-prep/scripts/session_start_check.ps1 -Root .
 ```
 
-如果不用 wrapper，請用 `python -X utf8 .skills/genbi-prep/scripts/check_genbi_prep.py --root .`，避免 Windows PowerShell 預設 cp950 導致繁中輸出或 UTF-8 文件讀取失敗。如果系統環境沒有 `python`，改用 Codex bundled Python 或使用者目前環境中可執行 `openpyxl` 的 Python。檢查結果只是一份待辦清單；仍需透過訪談判斷哪些資訊應寫入欄位描述、欄位備註或知識典。
+如果不用 wrapper，請用 `python -X utf8 .agents/skills/genbi-prep/scripts/check_genbi_prep.py --root .`，避免 Windows PowerShell 預設 cp950 導致繁中輸出或 UTF-8 文件讀取失敗。如果系統環境沒有 `python`，改用 Codex bundled Python 或使用者目前環境中可執行 `openpyxl` 的 Python。檢查結果只是一份待辦清單；仍需透過訪談判斷哪些資訊應寫入欄位描述、欄位備註或知識典。
 
 ## Required Skill
 
-處理本專案時優先使用 repo 內的 `$genbi-prep` skill：
+處理本專案時優先使用 repo 內的 `$genbi-prep` skill。此 skill 放在 Codex 會自動掃描的 repo-scoped skill 位置 `.agents/skills/`：
 
-- Skill path: `.skills/genbi-prep/SKILL.md`
-- 檢查器: `.skills/genbi-prep/scripts/check_genbi_prep.py`
-- Active file 候選檢查器: `.skills/genbi-prep/scripts/list_active_candidates.py`
-- Session-start hook 草稿: `.skills/genbi-prep/scripts/session_start_check.ps1`
-- Schema 轉換器: `.skills/genbi-prep/scripts/build_schema_after.py`
-- Workbench 版本命名工具: `.skills/genbi-prep/scripts/version_workbench_artifact.py`
-- 作業 checklist: `.skills/genbi-prep/references/prep-checklist.md`
+- Skill path: `.agents/skills/genbi-prep/SKILL.md`
+- 檢查器: `.agents/skills/genbi-prep/scripts/check_genbi_prep.py`
+- Active file 候選檢查器: `.agents/skills/genbi-prep/scripts/list_active_candidates.py`
+- Session-start hook 草稿: `.agents/skills/genbi-prep/scripts/session_start_check.ps1`
+- Schema 轉換器: `.agents/skills/genbi-prep/scripts/build_schema_after.py`
+- Workbench 版本命名工具: `.agents/skills/genbi-prep/scripts/version_workbench_artifact.py`
+- 作業 checklist: `.agents/skills/genbi-prep/references/prep-checklist.md`
 
 ## Folder Contract
 
@@ -75,13 +82,13 @@ Excel 檔案不進 Git；本專案用檔名與 changelog 管理 workbench 版本
 產生下一版 workbench 檔名或複製來源檔時，使用：
 
 ```powershell
-python -X utf8 .skills/genbi-prep/scripts/version_workbench_artifact.py schema --source "<confirmed-active-file.xlsx>" --stage enriched --note first_pass --summary "Initial schema enrichment draft from confirmed active file."
+python -X utf8 .agents/skills/genbi-prep/scripts/version_workbench_artifact.py schema --source "<confirmed-active-file.xlsx>" --stage enriched --note first_pass --summary "Initial schema enrichment draft from confirmed active file."
 ```
 
 只預覽下一個檔名：
 
 ```powershell
-python -X utf8 .skills/genbi-prep/scripts/version_workbench_artifact.py schema --stage enriched --note user_review --dry-run
+python -X utf8 .agents/skills/genbi-prep/scripts/version_workbench_artifact.py schema --stage enriched --note user_review --dry-run
 ```
 
 ## Active File Confirmation
@@ -100,7 +107,7 @@ python -X utf8 .skills/genbi-prep/scripts/version_workbench_artifact.py schema -
 範例：
 
 ```powershell
-python -X utf8 .skills/genbi-prep/scripts/list_active_candidates.py schema
+python -X utf8 .agents/skills/genbi-prep/scripts/list_active_candidates.py schema
 ```
 
 如果 `02-workbench/` 有比 `01-source/` 更新的檔案，優先建議從最新 workbench 版本繼續；除非使用者明確指定重新從 source 開始。
@@ -108,7 +115,7 @@ python -X utf8 .skills/genbi-prep/scripts/list_active_candidates.py schema
 建立下一版後再修改：
 
 ```powershell
-python -X utf8 .skills/genbi-prep/scripts/version_workbench_artifact.py schema --source "<confirmed-active-file.xlsx>" --stage enriched --note user_review --summary "Created next schema workbench version from confirmed active file."
+python -X utf8 .agents/skills/genbi-prep/scripts/version_workbench_artifact.py schema --source "<confirmed-active-file.xlsx>" --stage enriched --note user_review --summary "Created next schema workbench version from confirmed active file."
 ```
 
 ## Work Goals
@@ -149,13 +156,13 @@ python -X utf8 .skills/genbi-prep/scripts/version_workbench_artifact.py schema -
 可用下列 script 產生 after 檔案草稿，再由 Codex 與使用者 review：
 
 ```powershell
-python -X utf8 .skills/genbi-prep/scripts/build_schema_after.py
+python -X utf8 .agents/skills/genbi-prep/scripts/build_schema_after.py
 ```
 
 預設讀取 `01-source/schema/` 中修改時間最新的 Excel，輸出 `03-final-exports/schema/Schema__after.xlsx`。若要測試範例格式，可以明確指定：
 
 ```powershell
-python -X utf8 .skills/genbi-prep/scripts/build_schema_after.py --input "00-examples/01-source/schema/Schema__before__example.xlsx" --output "02-workbench/schema/Schema__after__example_test.xlsx"
+python -X utf8 .agents/skills/genbi-prep/scripts/build_schema_after.py --input "00-examples/01-source/schema/Schema__before__example.xlsx" --output "02-workbench/schema/Schema__after__example_test.xlsx"
 ```
 
 ## Interview Style

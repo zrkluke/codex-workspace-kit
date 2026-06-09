@@ -5,7 +5,7 @@
 Run:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .skills/genbi-prep/scripts/session_start_check.ps1 -Root .
+powershell -ExecutionPolicy Bypass -File .agents/skills/genbi-prep/scripts/session_start_check.ps1 -Root .
 ```
 
 If running Python directly on Windows, use `python -X utf8 ...` so Traditional Chinese output and UTF-8 files do not fall back to cp950.
@@ -55,7 +55,7 @@ Rules:
 Use:
 
 ```powershell
-python -X utf8 .skills/genbi-prep/scripts/version_workbench_artifact.py schema --source "<confirmed-active-file.xlsx>" --stage enriched --note first_pass --summary "Initial schema enrichment draft from confirmed active file."
+python -X utf8 .agents/skills/genbi-prep/scripts/version_workbench_artifact.py schema --source "<confirmed-active-file.xlsx>" --stage enriched --note first_pass --summary "Initial schema enrichment draft from confirmed active file."
 ```
 
 Source filenames may vary. Keep files in the right folder, then use `list_active_candidates.py` to choose the active file by modified time before creating a workbench version.
@@ -65,7 +65,7 @@ Source filenames may vary. Keep files in the right folder, then use `list_active
 Before editing any workbook or workbench note, run:
 
 ```powershell
-python -X utf8 .skills/genbi-prep/scripts/list_active_candidates.py schema
+python -X utf8 .agents/skills/genbi-prep/scripts/list_active_candidates.py schema
 ```
 
 Replace `schema` with `knowledge`, `golden`, `interview`, or `reports` as needed.

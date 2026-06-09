@@ -18,7 +18,7 @@ This repo separates examples, source files, workbench drafts, and final exports.
 From the workspace root:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .skills/genbi-prep/scripts/session_start_check.ps1 -Root .
+powershell -ExecutionPolicy Bypass -File .agents/skills/genbi-prep/scripts/session_start_check.ps1 -Root .
 ```
 
 The wrapper sets UTF-8 for Windows PowerShell. If running Python directly, use `python -X utf8 ...`. If `python` is unavailable, use the Codex bundled Python or any Python environment with `openpyxl`.
@@ -26,7 +26,7 @@ The wrapper sets UTF-8 for Windows PowerShell. If running Python directly, use `
 When the user asks to produce the final schema workbook, run:
 
 ```powershell
-python -X utf8 .skills/genbi-prep/scripts/build_schema_after.py
+python -X utf8 .agents/skills/genbi-prep/scripts/build_schema_after.py
 ```
 
 The converter defaults to the latest Excel under `01-source/schema/` and writes `03-final-exports/schema/Schema__after.xlsx`. Source filenames may vary. Use explicit `--input` and `--output` only for nonstandard paths or example-file tests.
@@ -34,7 +34,7 @@ The converter defaults to the latest Excel under `01-source/schema/` and writes 
 Before modifying schema, knowledge, golden, interview, or report artifacts, identify and confirm the active file. Compare `01-source/` and `02-workbench/` candidates by modified time:
 
 ```powershell
-python -X utf8 .skills/genbi-prep/scripts/list_active_candidates.py schema
+python -X utf8 .agents/skills/genbi-prep/scripts/list_active_candidates.py schema
 ```
 
 Tell the user which file appears latest and ask whether to continue from it. If a newer `02-workbench/` version exists, prefer it unless the user explicitly wants to restart from `01-source/`.
@@ -44,7 +44,7 @@ After the user confirms the active file, create a new `02-workbench/` version fr
 When creating or updating workbench Excel files, do not overwrite an existing workbook. Use filename-based versions and update the changelog:
 
 ```powershell
-python -X utf8 .skills/genbi-prep/scripts/version_workbench_artifact.py schema --source "<confirmed-active-file.xlsx>" --stage enriched --note first_pass --summary "Initial schema enrichment draft from confirmed active file."
+python -X utf8 .agents/skills/genbi-prep/scripts/version_workbench_artifact.py schema --source "<confirmed-active-file.xlsx>" --stage enriched --note first_pass --summary "Initial schema enrichment draft from confirmed active file."
 ```
 
 Read `references/prep-checklist.md` when you need the detailed interview checklist or workbook acceptance criteria.
